@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
         cout << endl;
         switch (choice)
         {
-           /**
+        /**
          * Добавление сотрудника в цех 
          * Поиск по массиву цехов нужного цеха
          * Считывание Имени, Фамилии, Отчества сотрудника
@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
             }
         }
         break;
-            /**
+        /**
          * Вывод информации о сотрудниках из всех цехов
          */
         case 2:
@@ -225,6 +225,77 @@ int main(int argc, char *argv[])
                     {
                         cout << "Sotrudnik: " << j + 1 << endl;
                         cout << (*mas_sotrudnik)[j] << endl;
+                    }
+                }
+            }
+        }
+        break;
+        /**
+         * Добавление СИЗ
+         * Поиск по массиву цехов нужного цеха
+         * Считывание наименования СИЗ и срок ношения СИЗ
+         * Выделение памяти под массив сиз и 
+         * перевыделение памяти в случае, если Getciz_count() больше или равно Getciz_size()
+         * Увеличение массива СИЗ после добавления сотрудника 
+         */
+        case 3:
+        {
+            int flag_name = 0;
+            cout << "Введите имя цеха" << endl;
+            cin >> poisk_shop_name;
+            for (int i = 0; i < count_shop; i++)
+            {
+                if (poisk_shop_name == mas_shop[i].Getshop_name())
+                {
+                    cout << "Введите  название СИЗ" << endl;
+                    cin >> ciz_name_adding;
+                    cout << "Введите  срок ношения (в часах)" << endl;
+                    cin >> ciz_data_adding;
+                    ciz_information c(ciz_name_adding, ciz_data_adding);
+                    flag_name = 1;
+                    ciz_information **mas_ciz = mas_shop[i].Getmas_ciz();
+                    if (*mas_ciz == NULL)
+                    {
+                        *mas_ciz = new ciz_information[5];
+                        mas_shop[i].setciz_size(5);
+                    }
+                    if (mas_shop[i].Getciz_size() <= mas_shop[i].Getciz_count())
+                    {
+                        ciz_information *new_mas_ciz = new ciz_information[2 * size_ciz];
+                        copy_n(*mas_ciz, size_ciz, new_mas_ciz);
+                        delete[] * mas_ciz;
+                        *mas_ciz = new_mas_ciz;
+                        size_ciz *= 2;
+                        mas_shop[i].setciz_size(size_ciz);
+                    }
+                    count_ciz = mas_shop[i].Getciz_count();
+                    (*mas_ciz)[count_ciz++] = c;
+                    mas_shop[i].setciz_count(count_ciz);
+                }
+            }
+            if (flag_name == 0)
+            {
+                cout << "Введенного цеха не существует" << endl;
+            }
+        }
+        break;
+        /**
+         * Вывод информации о СИЗ 
+         */
+        case 4:
+        {
+            for (int i = 0; i < count_shop; i++)
+            {
+                cout << "Shop #" << i + 1 << endl;
+                cout << mas_shop[i] << endl;
+                ciz_information **mas_ciz = mas_shop[i].Getmas_ciz();
+                if (*mas_ciz != NULL)
+                {
+                    count_ciz = mas_shop[i].Getciz_count();
+                    for (int k = 0; k < count_ciz; ++k)
+                    {
+                        cout << "СИЗ:" << k + 1 << endl;
+                        cout << (*mas_ciz)[k] << endl;
                     }
                 }
             }
@@ -274,7 +345,69 @@ int main(int argc, char *argv[])
             }
         }
         break;
-            /**
+        /**
+         * Удаление сотрудника из цеха 
+         * Поиск по цеху 
+         * Считывание Имени, Фамилии, Отчества сотрудника, которого ищем
+         * Если такой нашелся, то удаление 
+         * Уменьшение массива сотрудников
+         */
+         case 7:
+         {
+            cout << "Введите имя цеха: " << endl;
+            cin >> shopname_search;
+            int check = 0;
+            int check2 = 0;
+            for (int i = 0; i < count_shop; ++i)
+            {
+                if (shopname_search == mas_shop[i].Getshop_name())
+                {
+                    sotrudnik_information **mas_sotrudnik = mas_shop[i].Getmas_sotrudnik();
+                    count_sotr = mas_shop[i].Getsotrudnik_count();
+                    check2 = 1;
+                    if (count_sotr == 0)
+                    {
+                        cout << "Цех пуст!" << endl;
+                        break;
+                    }
+                    else
+                    {
+                        cout << "Введите имя сотрудника: " << endl;
+                        cin >> name_search;
+                        cout << "Введите фамилию сотрудника: " << endl;
+                        cin >> surname_search;
+                        cout << "Введите отчество сотрудника: " << endl;
+                        cin >> middlename_search;
+                        for (int j = 0; j < count_sotr; ++j)
+                        {
+                            if ((surname_search == (*mas_sotrudnik)[j].Getsotrudnik_surname()) && (name_search == (*mas_sotrudnik)[j].Getsotrudnik_name()) && (middlename_search == (*mas_sotrudnik)[j].Getsotrudnik_middlename()))
+                            {
+                                for (int k = j; k < count_sotr - 1; ++k)
+                                {
+                                    (*mas_sotrudnik)[k].Getsotrudnik_surname() = (*mas_sotrudnik)[k + 1].Getsotrudnik_surname();
+                                    (*mas_sotrudnik)[k].Getsotrudnik_name() = (*mas_sotrudnik)[k + 1].Getsotrudnik_name();
+                                    (*mas_sotrudnik)[k].Getsotrudnik_middlename() = (*mas_sotrudnik)[k + 1].Getsotrudnik_middlename();
+                                }
+                                count_sotr = count_sotr - 1;
+                                mas_shop[i].setsotrudnik_count(count_sotr);
+                                check = check + 1;
+                            }
+                        }
+                        if (check == 0)
+                        {
+                            cout << "Сотрудник не найден!" << endl;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (check2 == 0)
+            {
+                cout << "Цех не найден!" << endl;
+            }
+           break;
+         }        
+        /**
          * Расчет количества СИЗ необходимых для:
          * 1- цеха, 2- сотрудника, 3- предприятия 
          */
