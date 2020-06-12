@@ -2,7 +2,7 @@
  * \file   main.cpp
  * \brief  
  * 
- * \author 
+ * \author youngh8r (Шамшетдинов Руслан), PeshinaA (Пешина Анастасия), braindeadboooooy(Кляузов Глеб)
  * \date   June 2020
  *      
  *         
@@ -40,18 +40,32 @@ int main(int argc, char *argv[])
     string name_search;
     string middlename_search;
     string shopname_search;
-
+    /**
+     * Срок использования СИЗ
+     * Период расчета СИЗ
+     */
     unsigned int ciz_data;
     unsigned int data_srok;
+    /**
+     * Размер массива СИЗ
+     * Размер массива сотрудников 
+     */
     int size_ciz;
     int size_sotrudnik;
+    /**
+     * Количество сотрудников
+     * Количество СИЗ
+     */
     int count_sotr;
     int count_ciz;
+    /**
+     * Создание массива цехов
+     */
     shop_information *mas_shop;
-    string file_name;
+    string file_name; /// Название файла
     ifstream rf;
-    int choice;
-    string poisk_shop_name;
+    int choice; /// Выбор в меню
+    string poisk_shop_name; /// Поиск цеха
     string answer;
     help hlpob;
     if (argc >= 2)
