@@ -156,6 +156,80 @@ int main(int argc, char *argv[])
         cout << endl;
         switch (choice)
         {
+           /**
+         * Добавление сотрудника в цех 
+         * Поиск по массиву цехов нужного цеха
+         * Считывание Имени, Фамилии, Отчества сотрудника
+         * Выделение памяти под массив сотрудника и 
+         * перевыделение памяти в случае, если Getsotrudnik_count() станет больше или равно Getsotrudnik_size()
+         * Увеличение массива сотрудников после добавления сотрудника
+         */
+        case 1:
+        {
+            int flag_name = 0;
+            cout << "Введите имя цеха" << endl;
+            cin >> poisk_shop_name;
+            for (int i = 0; i < count_shop; i++)
+            {
+                if (poisk_shop_name == mas_shop[i].Getshop_name())
+                {
+                    cout << "Введите имя сотрудника" << endl;
+                    cin >> name_adding;
+                    cout << "Введите фамилию сотрудника" << endl;
+                    cin >> surname_adding;
+                    cout << "Введите отчество сотрудника" << endl;
+                    cin >> middlename_adding;
+                    sotrudnik_information a(name_adding, surname_adding, middlename_adding);
+                    flag_name = 1;
+                    sotrudnik_information **mas_sotrudnik = mas_shop[i].Getmas_sotrudnik();
+                    if (*mas_sotrudnik == NULL)
+                    {
+                        *mas_sotrudnik = new sotrudnik_information[5];
+                        mas_shop[i].setsotrudnik_size(5);
+                    }
+                    if (mas_shop[i].Getsotrudnik_size() <= mas_shop[i].Getsotrudnik_count())
+                    {
+                        sotrudnik_information *new_mas_sotrudnik = new sotrudnik_information[2 * size_sotrudnik];
+                        copy_n(*mas_sotrudnik, size_sotrudnik, new_mas_sotrudnik);
+                        delete[] * mas_sotrudnik;
+                        *mas_sotrudnik = new_mas_sotrudnik;
+                        size_sotrudnik *= 2;
+                        mas_shop[i].setsotrudnik_size(size_sotrudnik);
+                    }
+                    count_sotr = mas_shop[i].Getsotrudnik_count();
+                    (*mas_sotrudnik)[count_sotr++] = a;
+                    mas_shop[i].setsotrudnik_count(count_sotr);
+                    break;
+                }
+            }
+            if (flag_name == 0)
+            {
+                cout << "Введенного цеха не существует" << endl;
+            }
+        }
+        break;
+            /**
+         * Вывод информации о сотрудниках из всех цехов
+         */
+        case 2:
+        {
+            for (int i = 0; i < count_shop; ++i)
+            {
+                cout << "Shop #" << i + 1 << endl;
+                cout << mas_shop[i] << endl;
+                sotrudnik_information **mas_sotrudnik = mas_shop[i].Getmas_sotrudnik();
+                if (*mas_sotrudnik != NULL)
+                {
+                    count_sotr = mas_shop[i].Getsotrudnik_count();
+                    for (int j = 0; j < count_sotr; j++)
+                    {
+                        cout << "Sotrudnik: " << j + 1 << endl;
+                        cout << (*mas_sotrudnik)[j] << endl;
+                    }
+                }
+            }
+        }
+        break;
             /**
          * Добавление цеха
          * Считывание названия цеха
