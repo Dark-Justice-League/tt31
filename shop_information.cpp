@@ -33,7 +33,7 @@ shop_information::shop_information()
     shop_name = "";
 }
 /**
- * Конструктор для создания объекта класса и инициалиции полей класса shop_information
+ * Конструктор для создания объекта класса и инициализации полей класса shop_information
  */
 shop_information::shop_information(string shopname_1)
 {
