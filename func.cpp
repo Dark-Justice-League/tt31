@@ -1,3 +1,14 @@
+/*****************************************************************/ /**
+ * \file   func.cpp
+ * \brief  Основные функции программы
+ * 
+ * \author youngh8r (Шамшетдинов Руслан)
+ * \date   May 2020
+ * 
+ *         Исходный файл с основныи функциями программы
+ * 
+ * 
+ *********************************************************************/
 #include "func.h"
 #include <iostream>
 #include <cstring>
@@ -10,7 +21,14 @@
 #include "shop_information.h"
 using namespace std;
 
-
+/**
+ * Добавление сотрудника в цех 
+ * Поиск по массиву цехов нужного цеха
+ * Считывание Имени, Фамилии, Отчества сотрудника
+ * Выделение памяти под массив сотрудника и 
+ * перевыделение памяти в случае, если Getsotrudnik_count() станет больше или равно Getsotrudnik_size()
+ * Увеличение массива сотрудников после добавления сотрудника
+ */
 void Func::addSotr(string _poisk_shop_name, int _count_shop, int _count_sotr, shop_information * _mas_shop, string _name_adding, string _surname_adding, string _middlename_adding, int _size_sotrudnik){
         int flag_name = 0;
         cout << "Введите имя цеха" << endl;
@@ -53,8 +71,9 @@ void Func::addSotr(string _poisk_shop_name, int _count_shop, int _count_sotr, sh
             cout << "Введенного цеха не существует" << endl;
         }
 }
-
-
+/**
+ * Вывод информации о сотрудниках из всех цехов
+ */
 void Func::printSotr(int _count_shop, int _count_sotr,shop_information *_mas_shop){
     for (int i = 0; i < _count_shop; ++i)
         {
@@ -73,7 +92,14 @@ void Func::printSotr(int _count_shop, int _count_sotr,shop_information *_mas_sho
         }
 }
 
-
+/**
+ * Добавление СИЗ
+ * Поиск по массиву цехов нужного цеха
+ * Считывание наименования СИЗ и срок ношения СИЗ
+ * Выделение памяти под массив сиз и 
+ * перевыделение памяти в случае, если Getciz_count() больше или равно Getciz_size()
+ * Увеличение массива СИЗ после добавления сотрудника 
+ */
 void Func::addCiz(string _poisk_shop_name, int _count_shop, shop_information *_mas_shop, string _ciz_name_adding, int _ciz_data_adding, int _count_ciz, int _size_ciz){
         int flag_name = 0;
         cout << "Введите имя цеха" << endl;
@@ -115,7 +141,9 @@ void Func::addCiz(string _poisk_shop_name, int _count_shop, shop_information *_m
 
 }
 
-
+/**
+ * Вывод информации о СИЗ 
+ */
 void Func::printCiz(int _count_shop, shop_information *_mas_shop, int _count_ciz){
      for (int i = 0; i < _count_shop; i++)
         {
@@ -134,7 +162,12 @@ void Func::printCiz(int _count_shop, shop_information *_mas_shop, int _count_ciz
         }
 }
 
-
+/**
+ * Добавление цеха
+ * Считывание названия цеха
+ * Перевыделение памяти под массив цехов в случае если, count_shop больше или равно size_shop
+ * Увеличение массива цехов
+ */
 void Func::addShop(string _shopname_adding, int _size_shop, int _count_shop, shop_information *_mas_shop){
     cout << "Введите название цеха" << endl;
     cin >> _shopname_adding;
@@ -150,7 +183,9 @@ void Func::addShop(string _shopname_adding, int _size_shop, int _count_shop, sho
     _mas_shop[_count_shop++] = b;
 }
 
-
+ /**
+  * Вывод информации о цехах с СИЗ
+  */
 void Func::printShop(int _count_shop, shop_information *_mas_shop, int _count_ciz){
     for (int i = 0; i < _count_shop; ++i)
         {
@@ -169,7 +204,13 @@ void Func::printShop(int _count_shop, shop_information *_mas_shop, int _count_ci
         }
 }
 
-
+ /**
+  * Удаление сотрудника из цеха 
+  * Поиск по цеху 
+  * Считывание Имени, Фамилии, Отчества сотрудника, которого ищем
+  * Если такой нашелся, то удаление 
+  * Уменьшение массива сотрудников
+  */
 void Func::deleteSotr(string _shopname_search, int _count_shop, shop_information *_mas_shop, int _count_sotr, string _name_search, string _surname_search, string _middlename_search){
             cout << "Введите имя цеха: " << endl;
             cin >> _shopname_search;
@@ -224,7 +265,10 @@ void Func::deleteSotr(string _shopname_search, int _count_shop, shop_information
             }
 }
 
-
+/**
+ * Расчет количества СИЗ необходимых для:
+ * 1- цеха, 2- сотрудника, 3- предприятия 
+ */
 void Func::calculation(string _answer, string _poisk_shop_name, int _data_srok, int _count_shop, shop_information *_mas_shop, int _count_sotr, int _count_ciz, string _name_search, string _surname_search, string _middlename_search){
             cout << "Введите для кого рассчитать" << endl;
             cout << "1 - если для цеха, 2- для сотрудника, 3 - для предприятия" << endl;
