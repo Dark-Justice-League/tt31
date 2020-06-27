@@ -1,9 +1,12 @@
 all: tt12
 
-tt12: main.o  help.o ciz_information.o sotrudnik_information.o shop_information.o
-	g++ main.o help.o ciz_information.o sotrudnik_information.o shop_information.o -o tt12
+tt12: main.o func.o  help.o ciz_information.o sotrudnik_information.o shop_information.o
+	g++ main.o func.o help.o ciz_information.o sotrudnik_information.o shop_information.o -o tt12
 main.o: main.cpp
 	g++ main.cpp -c -o main.o
+
+func.o: func.cpp
+	g++ func.cpp -c -o func.o
 
 help.o: help.cpp 
 	g++ help.cpp -c -o help.o
