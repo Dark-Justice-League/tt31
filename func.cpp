@@ -2,7 +2,7 @@
  * \file   func.cpp
  * \brief  Основные функции программы
  * 
- * \author youngh8r (Шамшетдинов Руслан)
+ * \author braindeadboooooy(Кляузов Глеб)
  * \date   May 2020
  * 
  *         Исходный файл с основныи функциями программы
